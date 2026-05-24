@@ -1,8 +1,10 @@
-# Kaffy — Landing Page (Dark v2)
+# Kaffy — Landing Page (Lite / Light theme)
 
-Client-presentable prototype of the Kaffy landing page (dark theme), exported
-from Claude Design. It's a single self-contained `index.html` plus its image
-assets — no build step, no dependencies to install.
+Client-presentable prototype of the Kaffy landing page (light "lite-v-1"
+theme), exported from Claude Design. It's a single self-contained `index.html`
+plus its image assets — no build step, no dependencies to install.
+
+> The dark v2 theme lives on the `claude/tender-maxwell-Hnfwr` branch.
 
 ## Preview locally
 
