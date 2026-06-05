@@ -718,11 +718,12 @@ section{padding:120px 0; position:relative}
   background:url('images/final-cta.jpg') center/cover no-repeat;
   opacity:.35;
 }
+[data-theme="dark"] .final-cta::before{opacity:.22}
 .final-cta::after{
   content:""; position:absolute; inset:0; z-index:1;
   background:
     radial-gradient(60% 80% at 50% 0%, rgba(12,123,224,.18), transparent 60%),
-    linear-gradient(180deg, rgba(247,246,242,.65) 0%, rgba(247,246,242,.85) 60%, var(--bg) 100%);
+    linear-gradient(180deg, rgba(var(--bg-rgb),.65) 0%, rgba(var(--bg-rgb),.85) 60%, var(--bg) 100%);
 }
 .final-cta > .wrap{position:relative; z-index:2}
 .final-cta h2{font-size:clamp(44px, 5.6vw, 88px); max-width:14ch; margin:0 auto 24px}
