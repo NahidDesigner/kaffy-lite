@@ -460,7 +460,7 @@ section{padding:120px 0; position:relative}
 .how-top h2{font-size:clamp(36px, 4.4vw, 64px)}
 .how-grid{display:grid; grid-template-columns:1.1fr 1fr 1fr 1fr; gap:20px; align-items:stretch}
 .how-video{aspect-ratio:4/5; position:relative; border-radius:var(--radius); overflow:hidden; border:1px solid var(--line)}
-.how-video img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover}
+.how-video img, .how-video video{position:absolute; inset:0; width:100%; height:100%; object-fit:cover}
 .how-video::after{
   content:""; position:absolute; inset:0;
   background:linear-gradient(180deg, transparent 50%, rgba(0,0,0,.5) 100%);
@@ -489,6 +489,12 @@ section{padding:120px 0; position:relative}
 @media (max-width:1100px){.how-grid{grid-template-columns:repeat(2,1fr)} .how-video.ph{grid-column:span 2; aspect-ratio:16/9}}
 @media (max-width:600px){.how-grid{grid-template-columns:1fr} .how-video.ph{grid-column:auto}}
 @media (max-width:780px){.how-top{grid-template-columns:1fr}}
+
+/* ───────── inside production (reels) ───────── */
+.production .reel-grid{margin-top:48px; display:grid; grid-template-columns:repeat(2,1fr); gap:24px; max-width:720px}
+.reel{aspect-ratio:9/16; position:relative; border-radius:var(--radius); overflow:hidden; border:1px solid var(--line); background:var(--bg-2)}
+.reel video{position:absolute; inset:0; width:100%; height:100%; object-fit:cover}
+@media (max-width:600px){.production .reel-grid{gap:14px}}
 
 .safety-note{
   margin-top:40px; padding:18px 22px; border-radius:var(--radius-sm);
@@ -1344,9 +1350,10 @@ footer{padding:80px 0 40px; border-top:1px solid var(--line); background:var(--p
 
     <div class="how-grid">
       <div class="how-video">
-        <img src="images/how-poster.jpg" alt="Kaffy pouch demo" />
-        <button class="play-overlay" aria-label="Play how-to video"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
-        <span class="dur">0:12</span>
+        <video autoplay muted loop playsinline poster="images/how-poster.jpg" preload="metadata">
+          <source src="images/production-1.mp4" type="video/mp4" />
+          <img src="images/how-poster.jpg" alt="Kaffy pouch demo" />
+        </video>
       </div>
       <div class="how-step">
         <div class="step-num">01</div>
@@ -1371,6 +1378,32 @@ footer{padding:80px 0 40px; border-top:1px solid var(--line); background:var(--p
     <div class="safety-note">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
       <div>Not recommended for pregnant or lactating women, or individuals sensitive to caffeine. Consume responsibly. Do not chew or swallow pouch. Keep out of reach of children.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── inside production ───────── -->
+<section id="production" class="production">
+  <div class="wrap">
+    <div class="s-head">
+      <div>
+        <span class="eyebrow">Inside Production</span>
+        <h2 style="margin-top:18px">Real footage,<br>straight from the line.</h2>
+      </div>
+      <p class="s-meta">No stock clips. This is Kaffy being made — filmed on our own production floor.</p>
+    </div>
+
+    <div class="reel-grid">
+      <div class="reel">
+        <video autoplay muted loop playsinline preload="metadata">
+          <source src="images/production-1.mp4" type="video/mp4" />
+        </video>
+      </div>
+      <div class="reel">
+        <video autoplay muted loop playsinline preload="metadata">
+          <source src="images/production-2.mp4" type="video/mp4" />
+        </video>
+      </div>
     </div>
   </div>
 </section>
@@ -1977,7 +2010,7 @@ footer{padding:80px 0 40px; border-top:1px solid var(--line); background:var(--p
     // Auto-tag groups
     const single = ['.s-head', '.ctable', '.brain-grid', '.final-cta h2', '.final-cta .lead', '.final-cta-btns', '.trust-inner', '.shop-foot', '.safety-note', '.faq-grid'];
     single.forEach(sel => document.querySelectorAll(sel).forEach(el => el.classList.add('reveal')));
-    const stagger = ['.benefits-grid', '.tier-grid', '.ing-grid', '.timeline-track', '.trusted-rail', '.review-grid', '.ugc-grid', '.stats-facts', '.faq-list', '.how-grid'];
+    const stagger = ['.benefits-grid', '.tier-grid', '.ing-grid', '.timeline-track', '.trusted-rail', '.review-grid', '.ugc-grid', '.stats-facts', '.faq-list', '.how-grid', '.reel-grid'];
     stagger.forEach(sel => document.querySelectorAll(sel).forEach(el => el.classList.add('reveal-stagger')));
 
     const io = new IntersectionObserver((entries) => {
