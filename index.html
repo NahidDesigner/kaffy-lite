@@ -708,6 +708,11 @@ section{padding:120px 0; position:relative}
   display:flex; align-items:center; justify-content:center; z-index:3;
   box-shadow:0 0 30px var(--accent-glow);
 }
+/* live social feed (manually-pasted TikTok / Instagram embeds) */
+.social-feed{display:flex; flex-wrap:wrap; gap:22px; justify-content:center; margin-top:48px}
+.social-feed > blockquote, .social-feed > iframe{margin:0 !important}
+.social-link{color:var(--accent); text-decoration:none; border-bottom:1px solid transparent; transition:border-color .2s ease}
+.social-link:hover{border-color:var(--accent)}
 @media (max-width:1100px){.ugc-grid{grid-template-columns:repeat(3,1fr)}}
 @media (max-width:680px){.ugc-grid{grid-template-columns:repeat(2,1fr)}}
 
@@ -1685,18 +1690,31 @@ footer{padding:80px 0 40px; border-top:1px solid var(--line); background:var(--p
   </div>
 </section>
 
-<!-- ───────── OUT IN THE WORLD UGC (Ultra/WIP style) ───────── -->
-<section class="ugc">
+<!-- ───────── OUT IN THE WORLD — live social feed (@KaffyKick) ───────── -->
+<section class="ugc" id="social">
   <div class="wrap">
     <div class="s-head">
       <div>
         <span class="eyebrow">Out in the World · @KaffyKick</span>
         <h2 style="margin-top:18px">Real athletes.<br>Real focus.</h2>
       </div>
-      <p class="s-meta">Share your moment with <strong style="color:var(--ink)">#KaffyKick</strong> or tag <strong style="color:var(--accent)">@KaffyKick</strong>. We'll see you.</p>
+      <p class="s-meta">Catch the latest from <a class="social-link" href="https://www.instagram.com/kaffykick/" target="_blank" rel="noopener">Instagram</a> &amp; <a class="social-link" href="https://www.tiktok.com/@kaffykick" target="_blank" rel="noopener">TikTok</a>. Tag <strong style="color:var(--accent)">@KaffyKick</strong> with <strong style="color:var(--ink)">#KaffyKick</strong> — we'll see you.</p>
     </div>
 
-    <div class="ugc-grid">
+    <!-- ══════════════════════════════════════════════════════════════════
+         SOCIAL EMBEDS · paste a TikTok / Instagram embed snippet (the post's
+         Share → Embed <blockquote> code) between the two PASTE markers below.
+         The right embed.js auto-loads when a post is present, and the
+         placeholder grid (#social-placeholder) hides itself automatically.
+         ══════════════════════════════════════════════════════════════════ -->
+    <div class="social-feed" id="social-feed">
+      <!-- ▼▼▼ PASTE TIKTOK / INSTAGRAM EMBEDS BELOW ▼▼▼ -->
+
+      <!-- ▲▲▲ PASTE TIKTOK / INSTAGRAM EMBEDS ABOVE ▲▲▲ -->
+    </div>
+
+    <!-- Placeholder — shown until the first real post is pasted above -->
+    <div class="ugc-grid social-placeholder" id="social-placeholder">
       <div class="ugc-tile">
         <img class="ugc-bg" src="images/ugc-1.jpg" alt="" aria-hidden="true" />
         <button class="play-btn" aria-label="Play"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
@@ -1917,6 +1935,25 @@ footer{padding:80px 0 40px; border-top:1px solid var(--line); background:var(--p
   });
   wireAmazon('[data-amazon]', AMAZON_URL);
   wireAmazon('[data-amazon-5]', AMAZON_URL_5PACK);
+
+  /* ───────────────────────────────────────────────
+     SOCIAL FEED — show placeholder tiles until a real
+     TikTok/Instagram embed is pasted into #social-feed.
+     Only the needed platform's embed.js is loaded.
+     ─────────────────────────────────────────────── */
+  (() => {
+    const feed = document.getElementById('social-feed');
+    const ph   = document.getElementById('social-placeholder');
+    if (!feed || !ph) return;
+    const hasTikTok = !!feed.querySelector('.tiktok-embed');
+    const hasInsta  = !!feed.querySelector('.instagram-media');
+    const hasPosts  = hasTikTok || hasInsta || !!feed.querySelector('blockquote, iframe');
+    feed.style.display = hasPosts ? '' : 'none';
+    ph.style.display   = hasPosts ? 'none' : '';
+    const load = src => { const s = document.createElement('script'); s.async = true; s.src = src; document.body.appendChild(s); };
+    if (hasTikTok) load('https://www.tiktok.com/embed.js');
+    if (hasInsta)  load('https://www.instagram.com/embed.js');
+  })();
 
   /* Theme toggle (light ⇄ dark), persisted */
   (() => {
