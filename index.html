@@ -628,9 +628,10 @@ section{padding:120px 0; position:relative}
 .trusted{background:var(--bg-2); border-block:1px solid var(--line); overflow:hidden}
 .trusted-rail{
   margin-top:48px; display:flex; gap:18px; overflow-x:auto; scroll-snap-type:x mandatory;
-  scrollbar-width:none; padding-bottom:8px;
+  scrollbar-width:none; padding-bottom:8px; cursor:grab;
 }
 .trusted-rail::-webkit-scrollbar{display:none}
+.trusted-rail.dragging{cursor:grabbing; scroll-snap-type:none; user-select:none}
 .tr-card{
   flex:0 0 360px; min-height:480px;
   border:1px solid var(--line); border-radius:var(--radius);
@@ -1945,6 +1946,35 @@ footer{padding:80px 0 40px; border-top:1px solid var(--line); background:var(--p
     const load = src => { const s = document.createElement('script'); s.async = true; s.src = src; document.body.appendChild(s); };
     if (hasTikTok) load('https://www.tiktok.com/embed.js');
     if (hasInsta)  load('https://www.instagram.com/embed.js');
+  })();
+
+  /* ───────────────────────────────────────────────
+     Drag-to-scroll for the Trusted testimonials rail.
+     Mouse only — touch/trackpad keep native swipe.
+     ─────────────────────────────────────────────── */
+  (() => {
+    document.querySelectorAll('.trusted-rail').forEach(rail => {
+      let down = false, startX = 0, startScroll = 0, moved = false;
+      rail.addEventListener('dragstart', e => e.preventDefault());
+      rail.addEventListener('pointerdown', e => {
+        if (e.pointerType !== 'mouse') return;
+        down = true; moved = false;
+        startX = e.pageX; startScroll = rail.scrollLeft;
+        try { rail.setPointerCapture(e.pointerId); } catch (_) {}
+        rail.classList.add('dragging');
+      });
+      rail.addEventListener('pointermove', e => {
+        if (!down) return;
+        const dx = e.pageX - startX;
+        if (Math.abs(dx) > 3) moved = true;
+        rail.scrollLeft = startScroll - dx;
+      });
+      const end = () => { if (down) { down = false; rail.classList.remove('dragging'); } };
+      rail.addEventListener('pointerup', end);
+      rail.addEventListener('pointercancel', end);
+      /* swallow the click that follows a drag so cards don't register a tap */
+      rail.addEventListener('click', e => { if (moved) { e.preventDefault(); e.stopPropagation(); } }, true);
+    });
   })();
 
   /* Theme toggle (light ⇄ dark), persisted */
