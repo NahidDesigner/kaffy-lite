@@ -1,0 +1,58 @@
+/* ───────────────── Kaffy legal pages — shared styles ───────────────── */
+/* tokens (mirrors index.html so the legal pages match the brand) */
+:root{
+  color-scheme: light;
+  --bg:#f7f6f2; --bg-rgb:247,246,242; --bg-2:#ffffff; --bg-3:#ecebe6;
+  --line:rgba(8,10,14,.10); --line-2:rgba(8,10,14,.18);
+  --ink:#0a0c12; --ink-2:#3d4555; --ink-3:#7c8597;
+  --accent:#0c7be0; --accent-2:#0a5fb0;
+  --nav-bg:rgba(247,246,242,.82);
+  --radius:14px;
+}
+[data-theme="dark"]{
+  color-scheme: dark;
+  --bg:#0c0e13; --bg-rgb:12,14,19; --bg-2:#161922; --bg-3:#1f232e;
+  --line:rgba(255,255,255,.10); --line-2:rgba(255,255,255,.20);
+  --ink:#f3f5f8; --ink-2:#aeb7c6; --ink-3:#7f8a9c;
+  --accent:#2e9bff; --accent-2:#1f86e8;
+  --nav-bg:rgba(12,14,19,.82);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+html{transition:background .35s ease}
+body{
+  background:var(--bg); color:var(--ink);
+  font-family:'Manrope',system-ui,-apple-system,sans-serif;
+  line-height:1.7; -webkit-font-smoothing:antialiased;
+}
+a{color:var(--accent); text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* header */
+.legal-nav{position:sticky; top:0; z-index:10; background:var(--nav-bg); backdrop-filter:blur(12px); border-bottom:1px solid var(--line)}
+.legal-nav .bar{max-width:1320px; margin:0 auto; padding:16px 24px; display:flex; align-items:center; justify-content:space-between; gap:16px}
+.brand{display:flex; align-items:baseline; gap:5px; font-family:'Space Grotesk',sans-serif}
+.brand .word{font-weight:700; font-size:22px; letter-spacing:-.02em; color:var(--ink)}
+.brand .tm{font-size:11px; color:var(--ink-3)}
+.brand .tag{font-size:12px; color:var(--accent); margin-left:6px; font-weight:500}
+.back{font-family:'JetBrains Mono',ui-monospace,monospace; font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-2); white-space:nowrap}
+.back:hover{color:var(--accent); text-decoration:none}
+
+/* content */
+.legal-wrap{max-width:760px; margin:0 auto; padding:72px 24px 96px}
+.legal-wrap .eyebrow{font-family:'JetBrains Mono',ui-monospace,monospace; font-size:12px; letter-spacing:.2em; text-transform:uppercase; color:var(--accent)}
+.legal-wrap h1{font-family:'Space Grotesk',sans-serif; font-size:clamp(36px,5vw,56px); letter-spacing:-.03em; margin:14px 0 8px; line-height:1.05}
+.legal-wrap .updated{font-size:14px; color:var(--ink-3); margin:0 0 40px}
+.legal-wrap .lead{font-size:18px; color:var(--ink-2); margin:0 0 8px}
+.legal-wrap h2{font-family:'Space Grotesk',sans-serif; font-size:22px; margin:42px 0 12px; color:var(--ink); letter-spacing:-.01em}
+.legal-wrap p{color:var(--ink-2); font-size:16px; margin:0 0 14px}
+.legal-wrap ul{padding-left:20px; margin:0 0 14px}
+.legal-wrap li{color:var(--ink-2); font-size:16px; margin-bottom:8px}
+.legal-wrap strong{color:var(--ink)}
+.legal-note{margin-top:52px; padding:20px 24px; border:1px solid var(--line); border-radius:var(--radius); background:var(--bg-2); font-size:14px; color:var(--ink-3)}
+
+/* footer */
+.legal-foot{border-top:1px solid var(--line); padding:32px 24px; text-align:center; color:var(--ink-3); font-size:13px}
+.legal-foot a{color:var(--ink-3); margin:0 10px}
+.legal-foot a:hover{color:var(--accent)}
